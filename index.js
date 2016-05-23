@@ -20,4 +20,19 @@ app.get('/', function(req, res){
             console.log('Sent:', fileName);
         }
     });
+});
+
+app.get('/api/whoami', function(req, res){
+    var myIP = req.headers['x-forwarded-for'] || 
+     req.connection.remoteAddress || 
+     req.socket.remoteAddress ||
+     req.connection.socket.remoteAddress;
+    var operatingSystem = process.platform;
+    
+    res.json({
+        ipaddress: myIP ,
+        language: req.headers["accept-language"].split(',')[0] ,
+        software: operatingSystem
+    });
+    
 })
